@@ -6,9 +6,11 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('Test colorFromHex:', () {
     group('Valid formats test:', () {
-      const Set<String> valid6digits = {'aBc', '#aBc', 'aaBBcc', '#aaBBcc'}, valid8digits = {'00aaBBcc', '#00aaBBcc'};
+      const Set<String> valid6digits = {'aBc', '#aBc', 'aaBBcc', '#aaBBcc'},
+          valid8digits = {'00aaBBcc', '#00aaBBcc'};
 
-      const Color expectedColor = Color(0xffaabbcc), expectedColorTransparent = Color(0x00aabbcc);
+      const Color expectedColor = Color(0xffaabbcc),
+          expectedColorTransparent = Color(0x00aabbcc);
 
       for (var format in valid6digits) {
         test(
@@ -127,7 +129,8 @@ void main() {
           final StringBuffer buffer = StringBuffer();
           for (int i = 0; i <= 9; i++) {
             buffer.write(i.toString());
-            expect(colorFromHex(buffer.toString()), (i == 7 || i == 5 || i == 2) ? isNot(null) : null);
+            expect(colorFromHex(buffer.toString()),
+                (i == 7 || i == 5 || i == 2) ? isNot(null) : null);
           }
         },
       );
@@ -138,8 +141,8 @@ void main() {
           final StringBuffer buffer = StringBuffer();
           for (int i = 0; i <= 9; i++) {
             buffer.write(i.toString());
-            expect(
-                colorFromHex(buffer.toString(), enableAlpha: false), (i == 7 || i == 5 || i == 2) ? isNot(null) : null);
+            expect(colorFromHex(buffer.toString(), enableAlpha: false),
+                (i == 7 || i == 5 || i == 2) ? isNot(null) : null);
           }
         },
       );
@@ -219,8 +222,8 @@ void main() {
       final String transparency = string.substring(4).toLowerCase();
       test(
         'It should convert $color: to #${transparency + string.toLowerCase()}, with hash, to lower case',
-        () => expect(
-            colorToHex(color, includeHashSign: true, toUpperCase: false), '#$transparency${string.toLowerCase()}'),
+        () => expect(colorToHex(color, includeHashSign: true, toUpperCase: false),
+            '#$transparency${string.toLowerCase()}'),
       );
     });
 
@@ -228,7 +231,8 @@ void main() {
       final String transparency = string.substring(4).toLowerCase();
       test(
         'It should convert $color to ${transparency + string.toLowerCase()}, with lower case',
-        () => expect(colorToHex(color, toUpperCase: false), transparency + string.toLowerCase()),
+        () =>
+            expect(colorToHex(color, toUpperCase: false), transparency + string.toLowerCase()),
       );
     });
 
@@ -239,98 +243,21 @@ void main() {
 
     colorsMap.forEach((color, string) => test(
           'It should convert $color: to #$string, with alpha disabled and hash',
-          () => expect(colorToHex(color, enableAlpha: false, includeHashSign: true), '#$string'),
+          () =>
+              expect(colorToHex(color, enableAlpha: false, includeHashSign: true), '#$string'),
         ));
 
     colorsMap.forEach((color, string) => test(
           'It should convert $color: to #${string.toLowerCase()}, with alpha disabled and hash, to lower case',
-          () => expect(colorToHex(color, enableAlpha: false, includeHashSign: true, toUpperCase: false),
+          () => expect(
+              colorToHex(color, enableAlpha: false, includeHashSign: true, toUpperCase: false),
               '#$string'.toLowerCase()),
         ));
 
     colorsMap.forEach((color, string) => test(
           'It should convert $color to ${string.toLowerCase()}, with alpha disabled, to lower case',
-          () => expect(colorToHex(color, enableAlpha: false, toUpperCase: false), string.toLowerCase()),
-        ));
-  });
-
-  group('Test ColorExtension2.toHexString:', () {
-    final Map<Color, String> colorsMap = {
-      const Color(0xffffffff): 'FFFFFF',
-      const Color(0x00000000): '000000',
-      const Color(0xF0F0F0F0): 'F0F0F0'
-    };
-
-    colorsMap.forEach((color, string) {
-      final String transparency = string.substring(4);
-      test(
-        'It should convert $color: to ${transparency + string}',
-        () => expect(color.toHexString(), transparency + string),
-      );
-    });
-
-    colorsMap.forEach((color, string) {
-      final String transparency = string.substring(4);
-      test(
-        'It should convert $color: to #${transparency + string} with hash',
-        () => expect(
-            color.toHexString(includeHashSign: true), '#$transparency$string'),
-      );
-    });
-
-    colorsMap.forEach((color, string) {
-      final String transparency = string.substring(4).toLowerCase();
-      test(
-        'It should convert $color: to #${transparency + string.toLowerCase()}, with hash, to lower case',
-        () => expect(
-            color.toHexString(includeHashSign: true, toUpperCase: false),
-            '#$transparency${string.toLowerCase()}'),
-      );
-    });
-
-    colorsMap.forEach((color, string) {
-      final String transparency = string.substring(4).toLowerCase();
-      test(
-        'It should convert $color to ${transparency + string.toLowerCase()}, with lower case',
-        () => expect(
-          color.toHexString(toUpperCase: false),
-          transparency + string.toLowerCase(),
-        ),
-      );
-    });
-
-    colorsMap.forEach((color, string) => test(
-          'It should convert $color: to $string, with alpha disabled',
           () => expect(
-            color.toHexString(enableAlpha: false),
-            string,
-          ),
-        ));
-
-    colorsMap.forEach((color, string) => test(
-          'It should convert $color: to #$string, with alpha disabled and hash',
-          () => expect(
-              color.toHexString(enableAlpha: false, includeHashSign: true),
-              '#$string'),
-        ));
-
-    colorsMap.forEach((color, string) => test(
-          'It should convert $color: to #${string.toLowerCase()}, with alpha disabled and hash, to lower case',
-          () => expect(
-            color.toHexString(
-              enableAlpha: false,
-              includeHashSign: true,
-              toUpperCase: false,
-            ),
-            '#$string'.toLowerCase(),
-          ),
-        ));
-
-    colorsMap.forEach((color, string) => test(
-          'It should convert $color to ${string.toLowerCase()}, with alpha disabled, to lower case',
-          () => expect(
-              color.toHexString(enableAlpha: false, toUpperCase: false),
-              string.toLowerCase()),
+              colorToHex(color, enableAlpha: false, toUpperCase: false), string.toLowerCase()),
         ));
   });
 }

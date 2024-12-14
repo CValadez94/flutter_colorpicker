@@ -2,7 +2,6 @@
 
 import 'dart:math';
 import 'package:flutter/painting.dart';
-import 'colors.dart';
 
 /// Check if is good condition to use white foreground color by passing
 /// the background color, and optional bias.
@@ -45,24 +44,6 @@ HSLColor hsvToHsl(HSVColor color) {
     color.hue,
     s.clamp(0.0, 1.0),
     l.clamp(0.0, 1.0),
-  );
-}
-
-/// Convert HSL to HSV
-///
-/// Reference: https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_HSV
-HSVColor hslToHsv(HSLColor color) {
-  double s = 0.0;
-  double v = 0.0;
-
-  v = color.lightness + color.saturation * (color.lightness < 0.5 ? color.lightness : 1 - color.lightness);
-  if (v != 0) s = 2 - 2 * color.lightness / v;
-
-  return HSVColor.fromAHSV(
-    color.alpha,
-    color.hue,
-    s.clamp(0.0, 1.0),
-    v.clamp(0.0, 1.0),
   );
 }
 
@@ -198,28 +179,3 @@ String colorToHex(
 
 // Shorthand for padLeft of RadixString, DRY.
 String _padRadix(int value) => value.toRadixString(16).padLeft(2, '0');
-
-// Extension for String
-extension ColorExtension1 on String {
-  Color? toColor() {
-    Color? color = colorFromName(this);
-    if (color != null) return color;
-    return colorFromHex(this);
-  }
-}
-
-// Extension from Color
-extension ColorExtension2 on Color {
-  String toHexString({
-    bool includeHashSign = false,
-    bool enableAlpha = true,
-    bool toUpperCase = true,
-  }) {
-    return colorToHex(
-      this,
-      includeHashSign: includeHashSign,
-      enableAlpha: enableAlpha,
-      toUpperCase: toUpperCase,
-    );
-  }
-}
